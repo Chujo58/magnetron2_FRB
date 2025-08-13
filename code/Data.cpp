@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include "json.hpp"
 
+using json = nlohmann::json;
 using namespace std;
 
 Data Data::instance;
@@ -25,15 +27,27 @@ void Data::load(const char* filename)
 	y.clear();
         yerr.clear();
 
-	double temp1, temp2, temp3;
-	while(fin>>temp1 && fin>>temp2 && fin>>temp3)
-	{
-		t.push_back(temp1);
-		y.push_back(temp2);
-                yerr.push_back(temp3);
-	}
+	//double temp1, temp2, temp3;
+	//while(fin>>temp1 && fin>>temp2 && fin>>temp3)
+	//{
+	//	t.push_back(temp1);
+	//	y.push_back(temp2);
+          //      yerr.push_back(temp3);
+	//}
 
-	fin.close();
+	//fin.close();
+	//
+	json j;
+	try {
+		fin >> j;
+	} catch (const json::parse_error& e) {
+		throw runtime_error("JSON parse error: " + string(e.what()));
+	}
+	
+	t = j["times"].get<std::vector<double>>();
+	y = j["profile"].get<std::vector<double>>();
+	yerr = j["std"].get<std::vector<double>>();
+
 	cout<<"# Found "<<t.size()<<" points in file "<<filename<<"."<<endl;
 
 	compute_summaries();
