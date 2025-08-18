@@ -24,8 +24,6 @@ eid = args.event
 path = args.path
 
 reader = ocf.npz_reader(f"{path}/{eid}.npz")
-writer = ocf.npz_writer(reader)
-writer.save("temp.npz")
 
 profile = mu.get_profile(reader.data_full)
 times = reader.times
@@ -33,5 +31,13 @@ std = np.std(reader.data_full, 0)
 
 with open("temp.json", "w") as f:
     json.dump(
-        {"profile": list(profile), "times": list(times), "std": list(std), "eid": eid}, f, indent=4
+        {
+            "profile": list(profile),
+            "times": list(times),
+            "std": list(std),
+            "eid": eid,
+            "npz": f"{path}/{eid}.npz",
+        },
+        f,
+        indent=4,
     )
