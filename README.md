@@ -29,7 +29,7 @@ python load.py eventid --path path_to_npz_files
 ./main -t num_cpu_cores
 ```
 3. Post-process the outputs: this script will create 3 plots
-    - `model_with_data.png`: Time profile with highlighted peaks (prominence cutoff of 0.1) and final mean model
+    - `model_with_data.png`: Time profile with highlighted peaks (prominence cutoff of 0.1 - [change here](https://github.com/Chujo58/magnetron2_FRB/blob/4388fe999644ffa70ef3cb9c88b3b88d88520f34/postprocess/postprocess.py#L106)) and final mean model
     - `number_of_bursts_distribution.png`: Distribution of the number of components in the posterior sample
     - `topology_peak_finding.png`: [findpeaks](https://erdogant.github.io/findpeaks/pages/html/index.html)'s topology peak finder results
 ``` bash
@@ -38,9 +38,9 @@ python load.py eventid --path path_to_npz_files
 
 ### Using the automated script
 1. Make sure your input file is called `eventid.json`
-2. Run the model using the shell script (uses 16 cores). Post-processing is done right after model is finished running.
+2. Run the model using the shell script (uses 16 cores - [change here](https://github.com/Chujo58/magnetron2_FRB/blob/4388fe999644ffa70ef3cb9c88b3b88d88520f34/code/run.sh#L53)). Post-processing is done right after model is finished running.
 ``` bash
 ./run.sh eventid
 ```
 
-For more information on the magnetron model, look into the `README.rst` file.
+For more information on the magnetron model, look into the [README.rst](https://github.com/Chujo58/magnetron2_FRB/blob/main/README.rst) file.
