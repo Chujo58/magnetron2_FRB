@@ -5,6 +5,8 @@ sys.path.append("/arc/home/clegue/baseband-analysis")
 
 from baseband_analysis.dev import Morphology_utils as mu
 
+# from reload_npz_data import reload
+
 import oscfar as ocf
 import argparse
 
@@ -23,20 +25,25 @@ args = parser.parse_args()
 eid = args.event
 path = args.path
 
-reader = ocf.npz_reader(f"{path}/{eid}.npz")
+try:
+    npz_path = f"{path}/{eid}.npz"
+    reader = ocf.npz_reader(npz_path)
+except FileNotFoundError:
+    print(f"File {npz_path} not found. Please check the path and event ID.")
+    sys.exit(1)
 
 profile = mu.get_profile(reader.data_full)
 times = reader.times
 std = np.std(reader.data_full, 0)
 
-with open("temp.json", "w") as f:
+with open(f"{eid}.json", "w") as f:
     json.dump(
         {
             "profile": list(profile),
             "times": list(times),
             "std": list(std),
             "eid": eid,
-            "npz": f"{path}/{eid}.npz",
+            "npz": npz_path,
         },
         f,
         indent=4,

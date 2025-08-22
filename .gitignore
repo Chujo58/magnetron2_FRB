@@ -1,3 +1,12 @@
 output/
 code/gsl/
 .ipynb_checkpoints/
+code/*results
+code/results*
+*.json
+*.npz
+*.jpg
+*.pdf
+*.tar.gz
+*.txt
+!README*
