@@ -2,7 +2,8 @@
 # called DNEST4_PATH for this to work.
 DNEST4_PATH = /arc/home/clegue
 JSON_PATH = ../include
-GSL_PATH = /opt/conda/include
+GSL_PATH = /opt/conda/include #when using skaha dock
+
 BLAS_PATH = /opt/conda/lib
 
 CXXFLAGS = -std=c++11 -O3 -Wall -Wextra -pedantic -DNDEBUG

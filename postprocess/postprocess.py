@@ -103,8 +103,16 @@ for i, x in enumerate(peaks["x"].tolist()):
     temp[int(x)] = prominences[i]
 
 df.insert(2, "prominence", temp)
+
 filtered = df[df["peak"]][~df["valley"]][df["prominence"] > 0.1]
 print(filtered)
+
+df.insert(3, "keep", df["prominence"] > 0.1)
+
+filtered.to_csv("filtered_peaks.csv", index=False)
+
+df[df['peak'].astype(bool) & (~df['valley'].astype(bool))].to_csv("identified_peaks.csv", index=False)
+df.to_csv("findpeaks_results.csv", index=False)
 
 # Plot the model with the data:
 plt.figure(figsize=(10, 6))
@@ -120,12 +128,13 @@ for p in filtered["x"].tolist():
 plt.legend()
 plt.xlabel("Time (s)")
 plt.ylabel("SNR")
+plt.title(f"magnetron2_FRB output for Event ID {event_id}")
 plt.savefig(f"model_with_data.png")
 
 plt.figure(figsize=(10, 6))
 u, c = np.unique(nbursts, return_counts=True)
 plt.bar(u, c)
-plt.xlabel("Number of Bursts")
+plt.xlabel("Number of components")
 plt.ylabel("Count")
-plt.title("Distribution of Number of Bursts")
+plt.title("Distribution of Number of components")
 plt.savefig(f"number_of_bursts_distribution.png")
