@@ -32,3 +32,8 @@ if [ $# -lt 1 ]; then
     echo "Usage: $0 <event_id>"
     exit 1
 fi
+
+# For loop for running multiple events
+for event_id in "$@"; do
+    run_post_processing $event_id
+done
