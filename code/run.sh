@@ -41,15 +41,19 @@ run_post_processing() {
 }
 
 # Main script execution
-if [ $# -lt 1 ]; then
-    echo "Usage: $0 <event_id>"
+if [ $# -lt 2 ]; then
+    echo "Usage: $0 <event_id> <num_cores>"
     exit 1
 fi
 
+load_temp $1
+./main -t $2
+run_post_processing $1
+
 # For loop for running multiple events
-for event_id in "$@"; do
+#for event_id in "$@"; do
     #prepare_event $event_id
-    load_temp $event_id
-    ./main -t 16 # Assuming 16 threads for processing
-    run_post_processing $event_id
-done
+ #   load_temp $event_id
+ #   ./main -t 16 # Assuming 16 threads for processing
+ #   run_post_processing $event_id
+#done
