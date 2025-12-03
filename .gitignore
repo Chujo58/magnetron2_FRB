@@ -10,3 +10,4 @@ code/results*
 *.tar.gz
 *.txt
 !README*
+!gsl-latest.tar.gz
